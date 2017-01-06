@@ -3,6 +3,9 @@ packer Ansible role
 
 Installs and configures [Packer] for building VM images.
 
+Unlike most community-maintained Packer installation roles, this role will
+verify package integrity via a GPG-signed SHA256 checksum file prior to installing.
+
 Role Variables
 --------------
 
