@@ -1,0 +1,7 @@
+---
+
+packer_version: 0.12.1
+packer_download_dir: /usr/local/src
+packer_zip_url: "https://releases.hashicorp.com/packer/{{ packer_version }}/packer_{{ packer_version }}_linux_amd64.zip"
+packer_checksum_url: "https://releases.hashicorp.com/packer/{{ packer_version }}/packer_{{ packer_version }}_SHA256SUMS"
+packer_signature_url: "{{ packer_checksum_url }}.sig"

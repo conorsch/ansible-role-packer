@@ -1,0 +1,36 @@
+---
+- name: Download Packer files.
+  get_url:
+    dest: "{{ packer_download_dir }}/{{ item|basename }}"
+    url: "{{ item }}"
+  with_items:
+    - "{{ packer_zip_url }}"
+    - "{{ packer_checksum_url }}"
+    - "{{ packer_signature_url }}"
+
+- name: Fetch Hashicorp GPG key.
+  command: gpg --recv-key "91A6E7F85D05C65630BEF18951852D87348FFC4C"
+  register: packer_gpg_key_result
+  changed_when: "'unchanged: 1' not in packer_gpg_key_result.stderr"
+
+- name: Validate GPG signature on checksum file.
+  command: >
+    gpg --verify
+    "{{ packer_download_dir }}/{{ packer_signature_url|basename }}"
+    "{{ packer_download_dir }}/{{ packer_checksum_url|basename }}"
+  register: packer_gpg_key_result
+  changed_when: false
+
+- name: Verify checksums.
+  command: >
+    sha256sum --check --status --ignore-missing
+    "{{ packer_checksum_url|basename }}"
+  changed_when: false
+  args:
+    chdir: "{{ packer_download_dir }}"
+
+- name: Extract Packer binary files.
+  unarchive:
+    remote_src: yes
+    src: "{{ packer_download_dir }}/{{ packer_zip_url|basename }}"
+    dest: /usr/local/bin
