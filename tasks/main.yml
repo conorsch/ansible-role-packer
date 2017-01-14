@@ -40,4 +40,4 @@
     remote_src: yes
     src: "{{ packer_download_dir }}/{{ packer_zip_url|basename }}"
     dest: /usr/local/bin
-  when: "packer_version_result.stdout != 'Packer v'+packer_version"
+  when: "packer_version_result.stdout|default('') != 'Packer v'+packer_version"
