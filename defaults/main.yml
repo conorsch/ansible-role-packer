@@ -1,7 +1,7 @@
 ---
 # Hardcoded version string. Will be reused in multiple vars. Must be manually
 # updated to install new versions. Checksums will be automatically verified.
-packer_version: 0.12.1
+packer_version: 0.12.3
 
 # Directory to store downloaded files, including checksum info.
 packer_download_dir: /usr/local/src
